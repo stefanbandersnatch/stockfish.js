@@ -503,6 +503,9 @@ bool Position::legal(Move m) const {
   Square from = from_sq(m);
   Square to = to_sq(m);
 
+  if (relative_rank(us, from) > RANK_4)
+        return false;
+
   assert(color_of(moved_piece(m)) == us);
   assert(piece_on(square<KING>(us)) == make_piece(us, KING));
 
@@ -565,6 +568,9 @@ bool Position::pseudo_legal(const Move m) const {
   Square to = to_sq(m);
   Piece pc = moved_piece(m);
 
+   if (relative_rank(us, from) > RANK_4)
+        return false;
+  
   // Use a slower but simpler function for uncommon cases
   // yet we skip the legality check of MoveList<LEGAL>().
   if (type_of(m) != NORMAL)
